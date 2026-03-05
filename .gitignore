@@ -1,0 +1,26 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment variables
+.env
+backend/.env
+
+# ML model files
+backend/transactions/ml/model.pkl
+backend/transactions/ml/encoder.pkl
+backend/transactions/ml/feature_columns.pkl
+
+# Database
+*.sqlite3
+
+# Node
+frontend/node_modules/
+frontend/.env
+frontend/.env.local
+
+# Build
+frontend/build/
+frontend/dist/
