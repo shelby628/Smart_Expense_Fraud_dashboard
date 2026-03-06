@@ -9,9 +9,7 @@ __pycache__/
 backend/.env
 
 # ML model files
-backend/transactions/ml/model.pkl
-backend/transactions/ml/encoder.pkl
-backend/transactions/ml/feature_columns.pkl
+
 
 # Database
 *.sqlite3
