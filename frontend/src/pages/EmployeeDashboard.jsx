@@ -146,6 +146,36 @@ function EmployeeDashboard() {
             <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{stats.normal_transactions}</p>
           </div>
         </div>
+       
+
+        {/* Action Buttons */}
+        <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem" }}>
+          <button
+            onClick={() => navigate("/manual")}
+            style={{
+              backgroundColor: "#013220", color: "#ffffff", border: "none",
+              padding: "0.6rem 1.2rem", borderRadius: "5px", cursor: "pointer",
+              fontWeight: "bold",
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#228B22")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#013220")}
+          >
+            ✏️ Manual Entry
+          </button>
+
+          <button
+            onClick={() => navigate("/upload")}
+            style={{
+              backgroundColor: "#013220", color: "#ffffff", border: "none",
+              padding: "0.6rem 1.2rem", borderRadius: "5px", cursor: "pointer",
+              fontWeight: "bold",
+            }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = "#228B22")}
+            onMouseOut={(e) => (e.target.style.backgroundColor = "#013220")}
+          >
+            📤 Upload Transactions
+          </button>
+        </div>
 
         {/* Recent Transactions Table */}
         <div style={{ marginTop: "3rem" }}>
