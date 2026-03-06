@@ -6,16 +6,34 @@ from django.utils import timezone
 import pandas as pd
 from transactions.services.audit_service import log_action
 
+# -------------------------------
+# Model paths
+# -------------------------------
 MODEL_PATH = "transactions/ml/model.pkl"
 ENCODER_PATH = "transactions/ml/encoder.pkl"
 FEATURE_COLUMNS_PATH = "transactions/ml/feature_columns.pkl"
 
-MODEL = joblib.load(MODEL_PATH)
-ENCODER = joblib.load(ENCODER_PATH)
-FEATURE_COLUMNS = joblib.load(FEATURE_COLUMNS_PATH)
+# -------------------------------
+# Lazy loading — models start as None
+# and only load when first needed
+# -------------------------------
+MODEL = None
+ENCODER = None
+FEATURE_COLUMNS = None
+
+def load_models():
+    global MODEL, ENCODER, FEATURE_COLUMNS
+    if MODEL is None:
+        MODEL = joblib.load(MODEL_PATH)
+        ENCODER = joblib.load(ENCODER_PATH)
+        FEATURE_COLUMNS = joblib.load(FEATURE_COLUMNS_PATH)
 
 
+# -------------------------------
+# Build features dynamically
+# -------------------------------
 def build_features(transactions):
+    load_models()  # ✅ load only when needed
     rows = []
     for txn in transactions:
         txn_dt = txn.transaction_date
@@ -77,7 +95,11 @@ def build_features(transactions):
     return X, df
 
 
+# -------------------------------
+# Score multiple transactions
+# -------------------------------
 def score_transactions(transactions):
+    load_models()  # ✅ load only when needed
     if not transactions.exists():
         return
     X, _ = build_features(transactions)
@@ -89,15 +111,17 @@ def score_transactions(transactions):
         txn.save()
 
 
+# -------------------------------
+# Score a single transaction
+# -------------------------------
 def score_single_transaction(transaction):
+    load_models()  # ✅ load only when needed
     X, _ = build_features([transaction])
     raw_score = MODEL.predict(X)[0]
 
     fraud_probability = min(float(raw_score) / 100.0, 1.0)
     ml_flag = 1 if fraud_probability >= 0.5 else 0
 
-    # ✅ No save here — just return the results
-    # ✅ views.py will handle saving everything at once
     log_action(
         transaction=transaction,
         user=None,
