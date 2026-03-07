@@ -64,7 +64,7 @@ function EmployeeDashboard() {
     navigate("/");
   };
 
-  // ✅ consistent color for status
+  //  consistent color for status
   const getStatusColor = (status) => {
     if (status === "Flagged") return "red";
     if (status === "Blocked") return "darkred";
@@ -72,7 +72,7 @@ function EmployeeDashboard() {
     return "#00ff7f";
   };
 
-  // ✅ color for final risk score
+  //  color for final risk score
   const getRiskColor = (score) => {
     if (score >= 70) return "red";
     if (score >= 40) return "orange";
@@ -121,9 +121,9 @@ function EmployeeDashboard() {
         </h1>
 
         {/* Stats Cards */}
-        <div style={{ display: "flex", gap: "1rem", marginTop: "2rem" }}>
-          <div style={{
-            flex: 1, padding: "1.5rem", backgroundColor: "#f0fff0",
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginTop: "2rem" }}>
+           <div style={{
+              flex: 1, minWidth: "200px", padding: "1.5rem", backgroundColor: "#f0fff0",
             borderRadius: "8px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)", color: "#013220"
           }}>
             <h3>Total Transactions</h3>
@@ -131,7 +131,7 @@ function EmployeeDashboard() {
           </div>
 
           <div style={{
-            flex: 1, padding: "1.5rem", backgroundColor: "#fff0f0",
+            flex: 1, minWidth: "200px", padding: "1.5rem", backgroundColor: "#fff0f0",
             borderRadius: "8px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)", color: "#8B0000"
           }}>
             <h3>Flagged Transactions</h3>
@@ -139,7 +139,7 @@ function EmployeeDashboard() {
           </div>
 
           <div style={{
-            flex: 1, padding: "1.5rem", backgroundColor: "#f0f0f0",
+            flex: 1, minWidth: "200px", padding: "1.5rem", backgroundColor: "#f0f0f0",
             borderRadius: "8px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)", color: "#000000"
           }}>
             <h3>Normal Transactions</h3>

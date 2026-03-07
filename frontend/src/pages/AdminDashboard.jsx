@@ -101,6 +101,7 @@ function AdminDashboard() {
       <div
         style={{
           display: "flex",
+          flexWrap: "wrap",
           gap: "1rem",
           marginTop: "2rem",
           padding: "0 2rem",
@@ -109,6 +110,7 @@ function AdminDashboard() {
         <div
           style={{
             flex: 1,
+            minWidth: "200px",
             padding: "1.5rem",
             backgroundColor: "#f0fff0",
             borderRadius: "8px",
@@ -125,6 +127,7 @@ function AdminDashboard() {
         <div
           style={{
             flex: 1,
+            minWidth: "200px",
             padding: "1.5rem",
             backgroundColor: "#fff0f0",
             borderRadius: "8px",
@@ -141,6 +144,7 @@ function AdminDashboard() {
         <div
           style={{
             flex: 1,
+            minWidth: "200px",
             padding: "1.5rem",
             backgroundColor: "#f0f0f0",
             borderRadius: "8px",
