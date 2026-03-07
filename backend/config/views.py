@@ -3,10 +3,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
-from ratelimit.decorators import ratelimit 
 import json
 
-@ratelimit(key='ip', rate='5/m', block=True) 
+
 @csrf_exempt
 @require_POST
 def cookie_login(request):
