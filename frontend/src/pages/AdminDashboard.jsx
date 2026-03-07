@@ -19,10 +19,7 @@ function AdminDashboard() {
 
   const toggleStatus = async (id) => {
     try {
-      const res = await API.post(
-        `transactions/admin/employees/${id}/toggle/`,
-        {}
-      );
+      const res = await API.post(`transactions/admin/employees/${id}/toggle/`, {});
       setEmployees((prev) =>
         prev.map((emp) =>
           emp.id === id ? { ...emp, is_active: res.data.is_active } : emp
@@ -48,109 +45,230 @@ function AdminDashboard() {
   }, []);
 
   return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#ffffff" }}>
-      {/* ================= NAVBAR ================= */}
-      <div style={{
-        width: "100%", height: "60px", backgroundColor: "#013220",
+    <div style={{
+      minHeight: "100vh",
+      backgroundColor: "#ffffff",
+      fontFamily: "'Georgia', serif",
+      color: "#0a0a0a",
+    }}>
+
+      {/* ── NAVBAR ── */}
+      <nav style={{
+        position: "sticky", top: 0, zIndex: 100,
+        backgroundColor: "rgba(255,255,255,0.97)",
+        borderBottom: "1px solid #e8e8e8",
         display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "0 20px", color: "#ffffff", boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+        padding: "1.2rem 4rem", boxSizing: "border-box",
       }}>
-        <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>Admin Dashboard</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+          <div style={{ width: 9, height: 9, backgroundColor: "#071e07", borderRadius: "50%" }} />
+          <span style={{ fontSize: "0.9rem", letterSpacing: "0.2em", color: "#071e07", fontWeight: "bold" }}>
+            SMARTEXPENSE
+          </span>
+          <span style={{
+            fontSize: "0.68rem", letterSpacing: "0.2em", color: "#ccc",
+            paddingLeft: "0.75rem", borderLeft: "1px solid #e8e8e8",
+          }}>
+            ADMIN CONSOLE
+          </span>
+        </div>
         <button
           onClick={handleLogout}
           style={{
-            backgroundColor: "#ffffff", color: "#013220", border: "none",
-            borderRadius: "5px", padding: "0.5rem 1rem", cursor: "pointer",
-            transition: "all 0.2s ease", fontWeight: "bold",
+            backgroundColor: "transparent", color: "#aaa", border: "none",
+            cursor: "pointer", fontSize: "0.78rem", letterSpacing: "0.12em",
+            fontFamily: "'Georgia', serif", transition: "color 0.2s ease",
           }}
-          onMouseOver={(e) => (e.target.style.backgroundColor = "#e6e6e6")}
-          onMouseOut={(e) => (e.target.style.backgroundColor = "#ffffff")}
+          onMouseOver={(e) => e.currentTarget.style.color = "#071e07"}
+          onMouseOut={(e) => e.currentTarget.style.color = "#aaa"}
         >
-          Logout
+          Sign out →
         </button>
-      </div>
+      </nav>
 
-      {/* ================= STATS SECTION ================= */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginTop: "2rem", padding: "0 2rem" }}>
-        <div style={{ flex: 1, minWidth: "200px", padding: "1.5rem", backgroundColor: "#f0fff0", borderRadius: "8px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)", color: "#013220" }}>
-          <h3>Total Transactions</h3>
-          <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{stats.total_transactions}</p>
-        </div>
-        <div style={{ flex: 1, minWidth: "200px", padding: "1.5rem", backgroundColor: "#fff0f0", borderRadius: "8px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)", color: "#8B0000" }}>
-          <h3>Flagged Transactions</h3>
-          <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{stats.flagged_transactions}</p>
-        </div>
-        <div style={{ flex: 1, minWidth: "200px", padding: "1.5rem", backgroundColor: "#f0f0f0", borderRadius: "8px", boxShadow: "0 2px 6px rgba(0,0,0,0.1)", color: "#000000" }}>
-          <h3>Normal Transactions</h3>
-          <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{stats.normal_transactions}</p>
-        </div>
-      </div>
+      {/* ── MAIN ── */}
+      <main style={{ maxWidth: 1140, margin: "0 auto", padding: "4rem 4rem 6rem" }}>
 
-      {/* ================= EMPLOYEE MANAGEMENT ================= */}
-      <div style={{ padding: "2rem" }}>
-        <h2 style={{ color: "#013220", marginBottom: "1rem" }}>Employee Management</h2>
-        <div style={{ backgroundColor: "#0a4d1b", borderRadius: "8px", overflowX: "auto", boxShadow: "0 2px 6px rgba(0,0,0,0.1)" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", color: "#ffffff" }}>
-            <thead>
-              <tr style={{ backgroundColor: "#013220" }}>
-                <th style={{ padding: "12px", textAlign: "left" }}>Username</th>
-                <th style={{ padding: "12px", textAlign: "left" }}>Email</th>
-                <th style={{ padding: "12px", textAlign: "left" }}>Status</th>
-                <th style={{ padding: "12px", textAlign: "left" }}>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {employees.length === 0 ? (
-                <tr>
-                  <td colSpan="4" style={{ padding: "12px", textAlign: "center" }}>No employees found.</td>
+        {/* Header */}
+        <div style={{ marginBottom: "3.5rem", paddingBottom: "2.5rem", borderBottom: "1px solid #f0f0f0" }}>
+          <p style={{ fontSize: "0.68rem", letterSpacing: "0.4em", color: "#071e07", marginBottom: "0.6rem" }}>
+            ADMINISTRATION
+          </p>
+          <h1 style={{ fontSize: "2.4rem", fontWeight: "900", color: "#0a0a0a", lineHeight: 1.1, margin: 0 }}>
+            Dashboard
+          </h1>
+          <p style={{ fontSize: "0.85rem", color: "#999", marginTop: "0.5rem", letterSpacing: "0.02em" }}>
+            System overview and employee management
+          </p>
+        </div>
+
+        {/* ── STATS GRID ── */}
+        <div style={{
+          display: "grid", gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "1px", backgroundColor: "#e8e8e8",
+          border: "1px solid #e8e8e8", marginBottom: "4rem",
+        }}>
+          {[
+            { label: "TOTAL TRANSACTIONS", value: stats.total_transactions, note: "All time" },
+            { label: "FLAGGED", value: stats.flagged_transactions, note: "Requires review" },
+            { label: "NORMAL", value: stats.normal_transactions, note: "Cleared" },
+          ].map((s, i) => (
+            <div key={i}
+              style={{ backgroundColor: "#fff", padding: "2.5rem 2rem", cursor: "default", transition: "background 0.2s" }}
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#f9faf9"}
+              onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#fff"}
+            >
+              <p style={{ fontSize: "0.65rem", letterSpacing: "0.28em", color: "#bbb", marginBottom: "1.2rem" }}>{s.label}</p>
+              <p style={{ fontSize: "3rem", fontWeight: "900", color: "#071e07", lineHeight: 1, marginBottom: "0.5rem" }}>{s.value}</p>
+              <p style={{ fontSize: "0.75rem", color: "#ccc", letterSpacing: "0.05em" }}>{s.note}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* ── QUICK ACTIONS ── */}
+        <div style={{ marginBottom: "4rem" }}>
+          <p style={{ fontSize: "0.68rem", letterSpacing: "0.4em", color: "#071e07", marginBottom: "1.5rem" }}>QUICK ACTIONS</p>
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+            <button
+              onClick={() => navigate("/admin/transactions")}
+              style={{
+                backgroundColor: "#071e07", color: "#fff", border: "none",
+                borderRadius: "3px", padding: "0.85rem 2rem", cursor: "pointer",
+                fontSize: "0.8rem", letterSpacing: "0.12em", fontFamily: "'Georgia', serif",
+                transition: "background 0.2s ease",
+              }}
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#0f3a0f"}
+              onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#071e07"}
+            >
+              All Transactions →
+            </button>
+            <button
+              onClick={() => navigate("/admin/audit-logs")}
+              style={{
+                backgroundColor: "transparent", color: "#071e07",
+                border: "1px solid #d8d8d8", borderRadius: "3px",
+                padding: "0.85rem 2rem", cursor: "pointer",
+                fontSize: "0.8rem", letterSpacing: "0.12em", fontFamily: "'Georgia', serif",
+                transition: "border-color 0.2s ease",
+              }}
+              onMouseOver={(e) => e.currentTarget.style.borderColor = "#071e07"}
+              onMouseOut={(e) => e.currentTarget.style.borderColor = "#d8d8d8"}
+            >
+              Audit Logs →
+            </button>
+          </div>
+        </div>
+
+        {/* ── EMPLOYEE TABLE ── */}
+        <div>
+          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "1.5rem" }}>
+            <div>
+              <p style={{ fontSize: "0.68rem", letterSpacing: "0.4em", color: "#071e07", marginBottom: "0.4rem" }}>PERSONNEL</p>
+              <h2 style={{ fontSize: "1.3rem", fontWeight: "900", color: "#0a0a0a", margin: 0 }}>Employee Management</h2>
+            </div>
+            <span style={{ fontSize: "0.75rem", color: "#bbb", letterSpacing: "0.05em" }}>
+              {employees.length} {employees.length === 1 ? "employee" : "employees"}
+            </span>
+          </div>
+
+          <div style={{ border: "1px solid #e8e8e8", borderRadius: "4px", overflow: "hidden" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "'Georgia', serif" }}>
+              <thead>
+                <tr style={{ backgroundColor: "#fafafa", borderBottom: "1px solid #e8e8e8" }}>
+                  {["USERNAME", "EMAIL", "STATUS", "ACTION"].map((col) => (
+                    <th key={col} style={{
+                      padding: "0.9rem 1.5rem", textAlign: "left",
+                      fontSize: "0.62rem", letterSpacing: "0.25em",
+                      color: "#bbb", fontWeight: "normal",
+                    }}>
+                      {col}
+                    </th>
+                  ))}
                 </tr>
-              ) : (
-                employees.map((emp) => (
-                  <tr key={emp.id} style={{ borderBottom: "1px solid #1f6b2d" }}>
-                    <td style={{ padding: "12px" }}>{emp.username}</td>
-                    <td style={{ padding: "12px" }}>{emp.email}</td>
-                    <td style={{ padding: "12px", fontWeight: "bold", color: emp.is_active ? "#00ff7f" : "#ff4d4d" }}>
-                      {emp.is_active ? "Active" : "Inactive"}
-                    </td>
-                    <td style={{ padding: "12px" }}>
-                      <button
-                        onClick={() => toggleStatus(emp.id)}
-                        style={{
-                          backgroundColor: emp.is_active ? "#8B0000" : "#228B22",
-                          color: "#ffffff", border: "none", padding: "6px 12px",
-                          borderRadius: "5px", cursor: "pointer",
-                        }}
-                      >
-                        {emp.is_active ? "Deactivate" : "Activate"}
-                      </button>
+              </thead>
+              <tbody>
+                {employees.length === 0 ? (
+                  <tr>
+                    <td colSpan="4" style={{ padding: "3rem", textAlign: "center", color: "#ccc", fontSize: "0.85rem" }}>
+                      No employees found.
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : (
+                  employees.map((emp, i) => (
+                    <tr key={emp.id} style={{
+                      borderBottom: i < employees.length - 1 ? "1px solid #f0f0f0" : "none",
+                      transition: "background 0.15s",
+                    }}
+                      onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#fafafa"}
+                      onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#fff"}
+                    >
+                      <td style={{ padding: "1.1rem 1.5rem", fontSize: "0.88rem", color: "#0a0a0a", fontWeight: "bold" }}>
+                        {emp.username}
+                      </td>
+                      <td style={{ padding: "1.1rem 1.5rem", fontSize: "0.82rem", color: "#999" }}>
+                        {emp.email}
+                      </td>
+                      <td style={{ padding: "1.1rem 1.5rem" }}>
+                        <span style={{
+                          display: "inline-flex", alignItems: "center", gap: "0.4rem",
+                          fontSize: "0.65rem", letterSpacing: "0.18em", fontWeight: "bold",
+                          color: emp.is_active ? "#071e07" : "#bbb",
+                        }}>
+                          <span style={{
+                            width: 6, height: 6, borderRadius: "50%",
+                            backgroundColor: emp.is_active ? "#071e07" : "#ddd",
+                            display: "inline-block",
+                          }} />
+                          {emp.is_active ? "ACTIVE" : "INACTIVE"}
+                        </span>
+                      </td>
+                      <td style={{ padding: "1.1rem 1.5rem" }}>
+                        <button
+                          onClick={() => toggleStatus(emp.id)}
+                          style={{
+                            backgroundColor: "transparent",
+                            color: emp.is_active ? "#cc0000" : "#071e07",
+                            border: `1px solid ${emp.is_active ? "#f5cccc" : "#d8d8d8"}`,
+                            borderRadius: "3px", padding: "0.35rem 0.9rem",
+                            cursor: "pointer", fontSize: "0.7rem",
+                            letterSpacing: "0.1em", fontFamily: "'Georgia', serif",
+                            transition: "all 0.2s ease",
+                          }}
+                          onMouseOver={(e) => e.currentTarget.style.backgroundColor = emp.is_active ? "#fff5f5" : "#f7faf7"}
+                          onMouseOut={(e) => e.currentTarget.style.backgroundColor = "transparent"}
+                        >
+                          {emp.is_active ? "Deactivate" : "Activate"}
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      </main>
 
-      {/* ================= ACTION BUTTONS ================= */}
-      <div style={{ display: "flex", gap: "1rem", marginTop: "2rem", padding: "0 2rem" }}>
-        <button
-          onClick={() => navigate("/admin/transactions")}
-          style={{ padding: "1rem 2rem", fontSize: "1rem", cursor: "pointer", backgroundColor: "#013220", color: "#ffffff", border: "none", borderRadius: "5px", transition: "all 0.25s ease" }}
-          onMouseOver={(e) => (e.target.style.backgroundColor = "#228B22")}
-          onMouseOut={(e) => (e.target.style.backgroundColor = "#013220")}
-        >
-          View All Transactions
-        </button>
-        <button
-          onClick={() => navigate("/admin/audit-logs")}
-          style={{ padding: "1rem 2rem", fontSize: "1rem", cursor: "pointer", backgroundColor: "#013220", color: "#ffffff", border: "none", borderRadius: "5px", transition: "all 0.25s ease" }}
-          onMouseOver={(e) => (e.target.style.backgroundColor = "#228B22")}
-          onMouseOut={(e) => (e.target.style.backgroundColor = "#013220")}
-        >
-          View Audit Logs
-        </button>
-      </div>
+      {/* ── FOOTER ── */}
+      <footer style={{
+        borderTop: "1px solid #e8e8e8", padding: "1.8rem 4rem",
+        display: "flex", justifyContent: "space-between", alignItems: "center",
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <div style={{ width: 7, height: 7, backgroundColor: "#071e07", borderRadius: "50%" }} />
+          <span style={{ fontSize: "0.78rem", color: "#071e07", letterSpacing: "0.15em" }}>SMARTEXPENSE</span>
+        </div>
+        <span style={{ fontSize: "0.68rem", color: "#ccc", letterSpacing: "0.1em" }}>FRAUD DETECTION SYSTEM © 2025</span>
+      </footer>
+
+      <style>{`
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        @media (max-width: 768px) {
+          nav, footer { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+          main { padding: 2rem 1.5rem 4rem !important; }
+          div[style*="repeat(3, 1fr)"] { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </div>
   );
 }
