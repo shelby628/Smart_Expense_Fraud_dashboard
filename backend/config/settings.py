@@ -26,10 +26,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # ✅ MUST be first
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -99,9 +99,17 @@ REST_FRAMEWORK = {
     )
 }
 
-# ✅ CORS — single clean definition
+# ✅ CORS
 CORS_ALLOW_ALL_ORIGINS = os.getenv("CORS_ALLOW_ALL_ORIGINS", "False") == "True"
 CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000").split(",")
 
 # ✅ Allow credentials for JWT
 CORS_ALLOW_CREDENTIALS = True
+```
+
+The **only change** was moving `CorsMiddleware` to the top of `MIDDLEWARE`. Now:
+
+1. Push this to GitHub — Render will auto-redeploy
+2. Go to Render → **Environment** and set:
+```
+CORS_ALLOWED_ORIGINS=https://smart-expense-fraud-dashboard.vercel.app,http://localhost:3000
