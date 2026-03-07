@@ -60,7 +60,7 @@ function Manual() {
     marginTop: "0.35rem",
     fontFamily: "'Georgia', serif",
     fontSize: "0.88rem",
-    color: "#0a0a0a",
+    color: "#FFFFFF",
     outline: "none",
     boxSizing: "border-box",
   };
