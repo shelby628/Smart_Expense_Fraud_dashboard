@@ -19,10 +19,7 @@ const EmployeeTransactions = () => {
     const fetchTransactions = async () => {
       setLoading(true);
       try {
-        const token = localStorage.getItem("access");
-        const response = await api.get(`transactions/?limit=1000`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const response = await api.get(`transactions/?limit=1000`);
 
         let data = response.data;
 
@@ -42,7 +39,6 @@ const EmployeeTransactions = () => {
     fetchTransactions();
   }, [isFlaggedView]);
 
-  //  color for status
   const getStatusColor = (status) => {
     if (status === "Flagged") return "red";
     if (status === "Blocked") return "darkred";
@@ -50,14 +46,12 @@ const EmployeeTransactions = () => {
     return "#00ff7f";
   };
 
-  //  color for final risk score
   const getRiskColor = (score) => {
     if (score >= 70) return "red";
     if (score >= 40) return "orange";
     return "#00ff7f";
   };
 
-  // Pagination slice
   const paginated = transactions.slice((page - 1) * limit, page * limit);
   const totalPages = Math.ceil(transactions.length / limit);
 
@@ -78,8 +72,7 @@ const EmployeeTransactions = () => {
           onClick={() => navigate("/dashboard")}
           style={{
             backgroundColor: "#ffffff", color: "#013220", border: "none",
-            borderRadius: "5px", padding: "0.5rem 1rem", cursor: "pointer",
-            fontWeight: "bold"
+            borderRadius: "5px", padding: "0.5rem 1rem", cursor: "pointer", fontWeight: "bold"
           }}
           onMouseOver={(e) => (e.target.style.backgroundColor = "#e6e6e6")}
           onMouseOut={(e) => (e.target.style.backgroundColor = "#ffffff")}
@@ -89,7 +82,6 @@ const EmployeeTransactions = () => {
       </div>
 
       <div style={{ padding: "2rem" }}>
-        {/* Transaction count */}
         <p style={{ color: "#555", marginBottom: "1rem" }}>
           Showing {paginated.length} of {transactions.length} transactions
         </p>
@@ -106,11 +98,9 @@ const EmployeeTransactions = () => {
                 <th style={{ padding: "10px", textAlign: "left" }}>Type</th>
                 <th style={{ padding: "10px", textAlign: "left" }}>Status</th>
                 <th style={{ padding: "10px", textAlign: "left" }}>Description</th>
-                {/* final_risk_score instead of risk_score */}
                 <th style={{ padding: "10px", textAlign: "left" }}>Final Risk Score</th>
               </tr>
             </thead>
-
             <tbody>
               {paginated.length === 0 ? (
                 <tr>
@@ -121,31 +111,12 @@ const EmployeeTransactions = () => {
               ) : (
                 paginated.map((txn) => (
                   <tr key={txn.id} style={{ borderBottom: "1px solid #1f6b2d" }}>
-                    <td style={{ padding: "10px", color: "#ffffff" }}>
-                      {new Date(txn.transaction_date).toLocaleDateString()}
-                    </td>
+                    <td style={{ padding: "10px", color: "#ffffff" }}>{new Date(txn.transaction_date).toLocaleDateString()}</td>
                     <td style={{ padding: "10px", color: "#ffffff" }}>{txn.amount}</td>
                     <td style={{ padding: "10px", color: "#ffffff" }}>{txn.transaction_type}</td>
-
-                    {/* txn.status instead of txn.is_flagged */}
-                    <td style={{
-                      padding: "10px",
-                      color: getStatusColor(txn.status),
-                      fontWeight: "bold"
-                    }}>
-                      {txn.status}
-                    </td>
-
+                    <td style={{ padding: "10px", color: getStatusColor(txn.status), fontWeight: "bold" }}>{txn.status}</td>
                     <td style={{ padding: "10px", color: "#ffffff" }}>{txn.description}</td>
-
-                    {/* ✅ final_risk_score with color */}
-                    <td style={{
-                      padding: "10px",
-                      fontWeight: "bold",
-                      color: getRiskColor(txn.final_risk_score)
-                    }}>
-                      {txn.final_risk_score ?? "N/A"}
-                    </td>
+                    <td style={{ padding: "10px", fontWeight: "bold", color: getRiskColor(txn.final_risk_score) }}>{txn.final_risk_score ?? "N/A"}</td>
                   </tr>
                 ))
               )}
@@ -153,7 +124,6 @@ const EmployeeTransactions = () => {
           </table>
         </div>
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <div style={{ marginTop: "1rem", display: "flex", gap: "1rem", alignItems: "center" }}>
             <button
@@ -167,9 +137,7 @@ const EmployeeTransactions = () => {
             >
               Previous
             </button>
-            <span style={{ color: "#013220", fontWeight: "bold" }}>
-              Page {page} of {totalPages}
-            </span>
+            <span style={{ color: "#013220", fontWeight: "bold" }}>Page {page} of {totalPages}</span>
             <button
               disabled={page >= totalPages}
               onClick={() => setPage(page + 1)}

@@ -21,10 +21,7 @@ const AdminTransactions = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const token = localStorage.getItem("access");
-        const res = await API.get("/transactions/employees/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await API.get("/transactions/employees/");
         setEmployees(res.data);
       } catch (err) {
         console.error("Error fetching employees:", err.message);
@@ -37,17 +34,13 @@ const AdminTransactions = () => {
     const fetchTransactions = async () => {
       setLoading(true);
       try {
-        const token = localStorage.getItem("access");
         const params = {
           page,
           limit,
           flagged: filterFlagged || undefined,
           employee_id: filterEmployee ? String(filterEmployee) : undefined,
         };
-        const res = await API.get("/transactions/admin/", {
-          headers: { Authorization: `Bearer ${token}` },
-          params,
-        });
+        const res = await API.get("/transactions/admin/", { params });
         setTransactions(res.data.results);
         setTotalPages(res.data.total_pages);
       } catch (err) {
@@ -61,12 +54,7 @@ const AdminTransactions = () => {
 
   const handleTransactionAction = async (id, action) => {
     try {
-      const token = localStorage.getItem("access");
-      await API.post(
-        `/transactions/${id}/review/`,
-        { action },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await API.post(`/transactions/${id}/review/`, { action });
       setModalVisible(false);
       setSelectedTransaction(null);
       setPage(1);
@@ -75,7 +63,6 @@ const AdminTransactions = () => {
     }
   };
 
-  // Helper: color based on final_risk_score
   const getRiskColor = (score) => {
     if (score === null || score === undefined) return "#888";
     if (score >= 70) return "red";
@@ -83,7 +70,6 @@ const AdminTransactions = () => {
     return "green";
   };
 
-  // Helper: color based on status
   const getStatusColor = (status) => {
     if (status === "Flagged") return "red";
     if (status === "Blocked") return "darkred";
@@ -96,29 +82,16 @@ const AdminTransactions = () => {
 
       {/* Navbar */}
       <div style={{
-        width: "100%",
-        height: "60px",
-        backgroundColor: "#013220",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "0 20px",
-        color: "#ffffff",
-        boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+        width: "100%", height: "60px", backgroundColor: "#013220",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "0 20px", color: "#ffffff", boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
       }}>
-        <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
-          All Transactions
-        </span>
+        <span style={{ fontWeight: "bold", fontSize: "1.2rem" }}>All Transactions</span>
         <button
           onClick={() => navigate("/admin")}
           style={{
-            backgroundColor: "#ffffff",
-            color: "#013220",
-            border: "none",
-            borderRadius: "5px",
-            padding: "0.5rem 1rem",
-            cursor: "pointer",
-            fontWeight: "bold",
+            backgroundColor: "#ffffff", color: "#013220", border: "none",
+            borderRadius: "5px", padding: "0.5rem 1rem", cursor: "pointer", fontWeight: "bold",
           }}
         >
           Back
@@ -135,9 +108,7 @@ const AdminTransactions = () => {
         >
           <option value="">All Employees</option>
           {employees.map((emp) => (
-            <option key={emp.id} value={emp.id.toString()}>
-              {emp.username}
-            </option>
+            <option key={emp.id} value={emp.id.toString()}>{emp.username}</option>
           ))}
         </select>
 
@@ -167,7 +138,6 @@ const AdminTransactions = () => {
                 <th style={{ padding: "0.6rem" }}>Status</th>
                 <th style={{ padding: "0.6rem" }}>Description</th>
                 <th style={{ padding: "0.6rem" }}>Flag Reason</th>
-                {/* ✅ final_risk_score replaces old risk_score */}
                 <th style={{ padding: "0.6rem" }}>Final Risk Score</th>
                 <th style={{ padding: "0.6rem" }}>Action</th>
               </tr>
@@ -182,49 +152,21 @@ const AdminTransactions = () => {
               ) : (
                 transactions.map((txn) => (
                   <tr key={txn.id} style={{ borderBottom: "1px solid #ddd", backgroundColor: "#f9f9f9", color: "#000" }}>
-                    <td style={{ padding: "0.6rem" }}>
-                      {new Date(txn.transaction_date).toLocaleDateString()}
-                    </td>
+                    <td style={{ padding: "0.6rem" }}>{new Date(txn.transaction_date).toLocaleDateString()}</td>
                     <td style={{ padding: "0.6rem" }}>{txn.employee?.username || "N/A"}</td>
                     <td style={{ padding: "0.6rem" }}>{txn.amount}</td>
                     <td style={{ padding: "0.6rem" }}>{txn.transaction_type}</td>
-
-                    {/* ✅ Status with color */}
-                    <td style={{
-                      padding: "0.6rem",
-                      color: getStatusColor(txn.status),
-                      fontWeight: "bold"
-                    }}>
-                      {txn.status}
-                    </td>
-
+                    <td style={{ padding: "0.6rem", color: getStatusColor(txn.status), fontWeight: "bold" }}>{txn.status}</td>
                     <td style={{ padding: "0.6rem" }}>{txn.description}</td>
-
-                    {/* ✅ Flag reason — shows why rules fired */}
-                    <td style={{ padding: "0.6rem", color: "#8B0000", fontSize: "0.85rem" }}>
-                      {txn.flag_reason || "—"}
-                    </td>
-
-                    {/* ✅ Final risk score with color coding */}
-                    <td style={{
-                      padding: "0.6rem",
-                      fontWeight: "bold",
-                      color: getRiskColor(txn.final_risk_score)
-                    }}>
-                      {txn.final_risk_score ?? "N/A"}
-                    </td>
-
+                    <td style={{ padding: "0.6rem", color: "#8B0000", fontSize: "0.85rem" }}>{txn.flag_reason || "—"}</td>
+                    <td style={{ padding: "0.6rem", fontWeight: "bold", color: getRiskColor(txn.final_risk_score) }}>{txn.final_risk_score ?? "N/A"}</td>
                     <td style={{ padding: "0.6rem" }}>
                       {txn.status === "Flagged" && (
                         <button
                           onClick={() => { setSelectedTransaction(txn); setModalVisible(true); }}
                           style={{
-                            backgroundColor: "#013220",
-                            color: "#fff",
-                            border: "none",
-                            borderRadius: "4px",
-                            padding: "0.3rem 0.6rem",
-                            cursor: "pointer",
+                            backgroundColor: "#013220", color: "#fff", border: "none",
+                            borderRadius: "4px", padding: "0.3rem 0.6rem", cursor: "pointer",
                           }}
                         >
                           Review
@@ -254,37 +196,26 @@ const AdminTransactions = () => {
           display: "flex", justifyContent: "center", alignItems: "center",
         }}>
           <div style={{
-            backgroundColor: "#0e0101",
-            padding: "2rem",
-            borderRadius: "8px",
-            width: "450px",
-            color: "#ffffff",
+            backgroundColor: "#0e0101", padding: "2rem", borderRadius: "8px",
+            width: "450px", color: "#ffffff",
           }}>
             <h3 style={{ marginBottom: "1rem" }}>Review Transaction</h3>
-
-            {/* Basic Info */}
             <p><strong>ID:</strong> {selectedTransaction.transaction_id}</p>
             <p><strong>Amount:</strong> {selectedTransaction.amount} {selectedTransaction.currency}</p>
             <p><strong>Description:</strong> {selectedTransaction.description}</p>
             <p><strong>Employee:</strong> {selectedTransaction.employee?.username}</p>
 
-            {/* ✅ Risk Breakdown Section */}
             <div style={{
-              backgroundColor: "#1a1a1a",
-              padding: "1rem",
-              borderRadius: "6px",
-              marginTop: "1rem",
-              marginBottom: "1rem",
+              backgroundColor: "#1a1a1a", padding: "1rem", borderRadius: "6px",
+              marginTop: "1rem", marginBottom: "1rem",
             }}>
               <h4 style={{ color: "#077a50", marginBottom: "0.75rem" }}>Risk Breakdown</h4>
-
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem" }}>
                 <span>Rule-Based Score:</span>
                 <strong style={{ color: getRiskColor(selectedTransaction.risk_score) }}>
                   {selectedTransaction.risk_score ?? "N/A"} / 100
                 </strong>
               </div>
-
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem" }}>
                 <span>ML Fraud Probability:</span>
                 <strong style={{
@@ -295,14 +226,12 @@ const AdminTransactions = () => {
                   {selectedTransaction.fraud_probability_percent ?? "N/A"}
                 </strong>
               </div>
-
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem" }}>
                 <span>Final Risk Score:</span>
                 <strong style={{ color: getRiskColor(selectedTransaction.final_risk_score) }}>
                   {selectedTransaction.final_risk_score ?? "N/A"} / 100
                 </strong>
               </div>
-
               <div style={{ marginTop: "0.75rem", padding: "0.5rem", backgroundColor: "#2a2a2a", borderRadius: "4px" }}>
                 <span style={{ color: "#aaa", fontSize: "0.85rem" }}>Flag Reason: </span>
                 <span style={{ color: "#ff6b6b", fontSize: "0.85rem" }}>
@@ -311,37 +240,22 @@ const AdminTransactions = () => {
               </div>
             </div>
 
-            {/* Action Buttons */}
             <div style={{ display: "flex", gap: "1rem" }}>
               <button
                 onClick={() => handleTransactionAction(selectedTransaction.id, "approve")}
-                style={{
-                  backgroundColor: "#228B22", color: "#ffffff",
-                  border: "none", padding: "0.5rem 1rem",
-                  borderRadius: "5px", cursor: "pointer", fontWeight: "bold",
-                }}
+                style={{ backgroundColor: "#228B22", color: "#ffffff", border: "none", padding: "0.5rem 1rem", borderRadius: "5px", cursor: "pointer", fontWeight: "bold" }}
               >
                 Approve
               </button>
-
               <button
                 onClick={() => handleTransactionAction(selectedTransaction.id, "block")}
-                style={{
-                  backgroundColor: "#8B0000", color: "#ffffff",
-                  border: "none", padding: "0.5rem 1rem",
-                  borderRadius: "5px", cursor: "pointer", fontWeight: "bold",
-                }}
+                style={{ backgroundColor: "#8B0000", color: "#ffffff", border: "none", padding: "0.5rem 1rem", borderRadius: "5px", cursor: "pointer", fontWeight: "bold" }}
               >
                 Block
               </button>
-
               <button
                 onClick={() => { setModalVisible(false); setSelectedTransaction(null); }}
-                style={{
-                  backgroundColor: "#555", color: "#ffffff",
-                  border: "none", padding: "0.5rem 1rem",
-                  borderRadius: "5px", cursor: "pointer", fontWeight: "bold",
-                }}
+                style={{ backgroundColor: "#555", color: "#ffffff", border: "none", padding: "0.5rem 1rem", borderRadius: "5px", cursor: "pointer", fontWeight: "bold" }}
               >
                 Cancel
               </button>

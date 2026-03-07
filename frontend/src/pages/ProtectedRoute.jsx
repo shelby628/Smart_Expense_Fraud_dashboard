@@ -9,22 +9,11 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
 
   useEffect(() => {
     const verify = async () => {
-      const token = localStorage.getItem("access");
-
-      // No token at all → redirect to landing page
-      if (!token) {
-        navigate("/");
-        return;
-      }
-
       try {
-        const res = await API.get("transactions/users/me/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await API.get("transactions/users/me/");
 
         const user = res.data;
 
-        // Admin trying to access employee route or vice versa
         if (adminOnly && !user.is_admin) {
           navigate("/");
           return;
@@ -37,9 +26,7 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
 
         setAuthorized(true);
       } catch (err) {
-        // Token is invalid or expired
-        localStorage.removeItem("access");
-        localStorage.removeItem("refresh");
+        // Cookie is invalid or expired
         navigate("/");
       } finally {
         setChecking(false);

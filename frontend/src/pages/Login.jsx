@@ -20,13 +20,9 @@ function Login() {
     slowTimer.current = setTimeout(() => setSlowMessage(true), 5000);
 
     try {
-      const res = await API.post("token/", { username, password });
-      localStorage.setItem("access", res.data.access);
-      localStorage.setItem("refresh", res.data.refresh);
+      await API.post("token/", { username, password });
 
-      const meRes = await API.get("transactions/users/me/", {
-        headers: { Authorization: `Bearer ${res.data.access}` },
-      });
+      const meRes = await API.get("transactions/users/me/");
       const userData = meRes.data;
 
       if (userData.is_admin) {
