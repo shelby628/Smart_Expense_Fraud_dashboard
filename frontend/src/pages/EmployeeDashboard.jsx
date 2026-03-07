@@ -56,14 +56,14 @@ function EmployeeDashboard() {
 
   const getStatusColor = (status) => {
     if (status === "Flagged") return "#cc0000";
-    if (status === "Blocked") return "#999";
+    if (status === "Blocked") return "#666";
     if (status === "Approved") return "#071e07";
     return "#071e07";
   };
 
   const getRiskColor = (score) => {
     if (score >= 70) return "#cc0000";
-    if (score >= 40) return "#999";
+    if (score >= 40) return "#666";
     return "#071e07";
   };
 
@@ -89,7 +89,7 @@ function EmployeeDashboard() {
             SMARTEXPENSE
           </span>
           <span style={{
-            fontSize: "0.68rem", letterSpacing: "0.2em", color: "#ccc",
+            fontSize: "0.68rem", letterSpacing: "0.2em", color: "#999",
             paddingLeft: "0.75rem", borderLeft: "1px solid #e8e8e8",
           }}>
             EMPLOYEE PORTAL
@@ -118,9 +118,9 @@ function EmployeeDashboard() {
             EMPLOYEE DASHBOARD
           </p>
           <h1 style={{ fontSize: "2.4rem", fontWeight: "900", color: "#0a0a0a", lineHeight: 1.1, margin: 0 }}>
-            Welcome back, {username}.
+            Welcome  {username}.
           </h1>
-          <p style={{ fontSize: "0.85rem", color: "#999", marginTop: "0.5rem", letterSpacing: "0.02em" }}>
+          <p style={{ fontSize: "0.85rem", color: "#534b4b", marginTop: "0.5rem", letterSpacing: "0.02em" }}>
             Your transaction activity and account overview
           </p>
         </div>
@@ -192,7 +192,7 @@ function EmployeeDashboard() {
               <p style={{ fontSize: "0.68rem", letterSpacing: "0.4em", color: "#071e07", marginBottom: "0.4rem" }}>ACTIVITY</p>
               <h2 style={{ fontSize: "1.3rem", fontWeight: "900", color: "#0a0a0a", margin: 0 }}>Recent Transactions</h2>
             </div>
-            <span style={{ fontSize: "0.75rem", color: "#bbb", letterSpacing: "0.05em" }}>Last 5 entries</span>
+            <span style={{ fontSize: "0.75rem", color: "#888", letterSpacing: "0.05em" }}>Last 5 entries</span>
           </div>
 
           <div style={{ border: "1px solid #e8e8e8", borderRadius: "4px", overflow: "hidden" }}>
@@ -203,7 +203,7 @@ function EmployeeDashboard() {
                     <th key={col} style={{
                       padding: "0.9rem 1.5rem", textAlign: "left",
                       fontSize: "0.62rem", letterSpacing: "0.25em",
-                      color: "#bbb", fontWeight: "normal",
+                      color: "#888", fontWeight: "normal",
                     }}>
                       {col}
                     </th>
@@ -213,7 +213,7 @@ function EmployeeDashboard() {
               <tbody>
                 {recentTransactions.length === 0 ? (
                   <tr>
-                    <td colSpan="6" style={{ padding: "3rem", textAlign: "center", color: "#ccc", fontSize: "0.85rem" }}>
+                    <td colSpan="6" style={{ padding: "3rem", textAlign: "center", color: "#999", fontSize: "0.85rem" }}>
                       No transactions found.
                     </td>
                   </tr>
@@ -226,13 +226,13 @@ function EmployeeDashboard() {
                       onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#fafafa"}
                       onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#fff"}
                     >
-                      <td style={{ padding: "1.1rem 1.5rem", fontSize: "0.8rem", color: "#999" }}>
+                      <td style={{ padding: "1.1rem 1.5rem", fontSize: "0.8rem", color: "#666" }}>
                         {new Date(txn.transaction_date).toLocaleDateString()}
                       </td>
                       <td style={{ padding: "1.1rem 1.5rem", fontSize: "0.9rem", color: "#0a0a0a", fontWeight: "bold" }}>
                         {txn.amount}
                       </td>
-                      <td style={{ padding: "1.1rem 1.5rem", fontSize: "0.82rem", color: "#999" }}>
+                      <td style={{ padding: "1.1rem 1.5rem", fontSize: "0.82rem", color: "#666" }}>
                         {txn.transaction_type}
                       </td>
                       <td style={{ padding: "1.1rem 1.5rem" }}>
@@ -243,7 +243,7 @@ function EmployeeDashboard() {
                           {txn.status?.toUpperCase()}
                         </span>
                       </td>
-                      <td style={{ padding: "1.1rem 1.5rem", fontSize: "0.82rem", color: "#999" }}>
+                      <td style={{ padding: "1.1rem 1.5rem", fontSize: "0.82rem", color: "#666" }}>
                         {txn.description}
                       </td>
                       <td style={{ padding: "1.1rem 1.5rem", fontSize: "0.88rem", fontWeight: "bold", color: getRiskColor(txn.final_risk_score) }}>
@@ -298,7 +298,7 @@ function EmployeeDashboard() {
           <div style={{ width: 7, height: 7, backgroundColor: "#071e07", borderRadius: "50%" }} />
           <span style={{ fontSize: "0.78rem", color: "#071e07", letterSpacing: "0.15em" }}>SMARTEXPENSE</span>
         </div>
-        <span style={{ fontSize: "0.68rem", color: "#ccc", letterSpacing: "0.1em" }}>FRAUD DETECTION SYSTEM © 2025</span>
+        <span style={{ fontSize: "0.68rem", color: "#999", letterSpacing: "0.1em" }}>FRAUD DETECTION SYSTEM © 2025</span>
       </footer>
 
       <style>{`

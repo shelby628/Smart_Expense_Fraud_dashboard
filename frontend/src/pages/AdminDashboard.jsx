@@ -66,7 +66,7 @@ function AdminDashboard() {
             SMARTEXPENSE
           </span>
           <span style={{
-            fontSize: "0.68rem", letterSpacing: "0.2em", color: "#ccc",
+            fontSize: "0.68rem", letterSpacing: "0.2em", color: "#999",
             paddingLeft: "0.75rem", borderLeft: "1px solid #e8e8e8",
           }}>
             ADMIN CONSOLE
@@ -97,7 +97,7 @@ function AdminDashboard() {
           <h1 style={{ fontSize: "2.4rem", fontWeight: "900", color: "#0a0a0a", lineHeight: 1.1, margin: 0 }}>
             Dashboard
           </h1>
-          <p style={{ fontSize: "0.85rem", color: "#999", marginTop: "0.5rem", letterSpacing: "0.02em" }}>
+          <p style={{ fontSize: "0.85rem", color: "#666", marginTop: "0.5rem", letterSpacing: "0.02em" }}>
             System overview and employee management
           </p>
         </div>
@@ -118,9 +118,9 @@ function AdminDashboard() {
               onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#f9faf9"}
               onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#fff"}
             >
-              <p style={{ fontSize: "0.65rem", letterSpacing: "0.28em", color: "#bbb", marginBottom: "1.2rem" }}>{s.label}</p>
+              <p style={{ fontSize: "0.65rem", letterSpacing: "0.28em", color: "#888", marginBottom: "1.2rem" }}>{s.label}</p>
               <p style={{ fontSize: "3rem", fontWeight: "900", color: "#071e07", lineHeight: 1, marginBottom: "0.5rem" }}>{s.value}</p>
-              <p style={{ fontSize: "0.75rem", color: "#ccc", letterSpacing: "0.05em" }}>{s.note}</p>
+              <p style={{ fontSize: "0.75rem", color: "#999", letterSpacing: "0.05em" }}>{s.note}</p>
             </div>
           ))}
         </div>
@@ -166,7 +166,7 @@ function AdminDashboard() {
               <p style={{ fontSize: "0.68rem", letterSpacing: "0.4em", color: "#071e07", marginBottom: "0.4rem" }}>PERSONNEL</p>
               <h2 style={{ fontSize: "1.3rem", fontWeight: "900", color: "#0a0a0a", margin: 0 }}>Employee Management</h2>
             </div>
-            <span style={{ fontSize: "0.75rem", color: "#bbb", letterSpacing: "0.05em" }}>
+            <span style={{ fontSize: "0.75rem", color: "#888", letterSpacing: "0.05em" }}>
               {employees.length} {employees.length === 1 ? "employee" : "employees"}
             </span>
           </div>
@@ -189,7 +189,7 @@ function AdminDashboard() {
               <tbody>
                 {employees.length === 0 ? (
                   <tr>
-                    <td colSpan="4" style={{ padding: "3rem", textAlign: "center", color: "#ccc", fontSize: "0.85rem" }}>
+                    <td colSpan="4" style={{ padding: "3rem", textAlign: "center", color: "#999", fontSize: "0.85rem" }}>
                       No employees found.
                     </td>
                   </tr>
@@ -205,14 +205,14 @@ function AdminDashboard() {
                       <td style={{ padding: "1.1rem 1.5rem", fontSize: "0.88rem", color: "#0a0a0a", fontWeight: "bold" }}>
                         {emp.username}
                       </td>
-                      <td style={{ padding: "1.1rem 1.5rem", fontSize: "0.82rem", color: "#999" }}>
+                      <td style={{ padding: "1.1rem 1.5rem", fontSize: "0.82rem", color: "#666" }}>
                         {emp.email}
                       </td>
                       <td style={{ padding: "1.1rem 1.5rem" }}>
                         <span style={{
                           display: "inline-flex", alignItems: "center", gap: "0.4rem",
                           fontSize: "0.65rem", letterSpacing: "0.18em", fontWeight: "bold",
-                          color: emp.is_active ? "#071e07" : "#bbb",
+                          color: emp.is_active ? "#071e07" : "#888",
                         }}>
                           <span style={{
                             width: 6, height: 6, borderRadius: "50%",
@@ -258,7 +258,7 @@ function AdminDashboard() {
           <div style={{ width: 7, height: 7, backgroundColor: "#071e07", borderRadius: "50%" }} />
           <span style={{ fontSize: "0.78rem", color: "#071e07", letterSpacing: "0.15em" }}>SMARTEXPENSE</span>
         </div>
-        <span style={{ fontSize: "0.68rem", color: "#ccc", letterSpacing: "0.1em" }}>FRAUD DETECTION SYSTEM © 2025</span>
+        <span style={{ fontSize: "0.68rem", color: "#999", letterSpacing: "0.1em" }}>FRAUD DETECTION SYSTEM © 2025</span>
       </footer>
 
       <style>{`
