@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { UNSAFE_getHydrationData, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import API from "../api";
 
 function Login() {
@@ -140,20 +140,20 @@ function Login() {
         <div style={{
           backgroundColor: "#ffffff",
           border: "1px solid #e8e8e8",
-          borderRadius: "4px",
+          borderRadius: "6px",
           padding: "2.5rem",
           boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
         }}>
 
-          {/* Wake-up message */}
+          {/* Slow wake-up message */}
           {slowMessage && (
             <div style={{
               backgroundColor: "#f7faf7",
-              border: "1px solid #c8e6c8",
-              borderRadius: "3px",
+              border: "1px solid #071e07",
+              borderRadius: "4px",
               padding: "0.75rem 1rem",
               marginBottom: "1.5rem",
-              fontSize: "0.82rem",
+              fontSize: "0.8rem",
               color: "#071e07",
               letterSpacing: "0.03em",
             }}>
@@ -165,11 +165,11 @@ function Login() {
           {error && (
             <div style={{
               backgroundColor: "#fff5f5",
-              border: "1px solid #fcc",
-              borderRadius: "3px",
+              border: "1px solid #ffcccc",
+              borderRadius: "4px",
               padding: "0.75rem 1rem",
               marginBottom: "1.5rem",
-              fontSize: "0.82rem",
+              fontSize: "0.8rem",
               color: "#cc0000",
               letterSpacing: "0.03em",
             }}>
@@ -198,13 +198,13 @@ function Login() {
           )}
 
           <form onSubmit={handleLogin}>
-            {/* Username */}
+            {/* Username field */}
             <div style={{ marginBottom: "1.5rem" }}>
               <label style={{
                 display: "block",
                 fontSize: "0.72rem",
-                letterSpacing: "0.15em",
-                color: "#777",
+                letterSpacing: "0.2em",
+                color: "#888",
                 marginBottom: "0.6rem",
               }}>
                 USERNAME
@@ -218,7 +218,7 @@ function Login() {
                 style={{
                   width: "100%",
                   backgroundColor: "#fafafa",
-                  border: "1px solid #e0e0e0",
+                  border: "1px solid #e8e8e8",
                   borderRadius: "3px",
                   padding: "0.85rem 1rem",
                   color: "#0a0a0a",
@@ -229,17 +229,17 @@ function Login() {
                   boxSizing: "border-box",
                 }}
                 onFocus={(e) => e.target.style.borderColor = "#071e07"}
-                onBlur={(e) => e.target.style.borderColor = "#e0e0e0"}
+                onBlur={(e) => e.target.style.borderColor = "#e8e8e8"}
               />
             </div>
 
-            {/* Password */}
+            {/* Password field */}
             <div style={{ marginBottom: "2rem" }}>
               <label style={{
                 display: "block",
                 fontSize: "0.72rem",
-                letterSpacing: "0.15em",
-                color: "#777",
+                letterSpacing: "0.2em",
+                color: "#888",
                 marginBottom: "0.6rem",
               }}>
                 PASSWORD
@@ -253,7 +253,7 @@ function Login() {
                 style={{
                   width: "100%",
                   backgroundColor: "#fafafa",
-                  border: "1px solid #e0e0e0",
+                  border: "1px solid #e8e8e8",
                   borderRadius: "3px",
                   padding: "0.85rem 1rem",
                   color: "#0a0a0a",
@@ -264,17 +264,17 @@ function Login() {
                   boxSizing: "border-box",
                 }}
                 onFocus={(e) => e.target.style.borderColor = "#071e07"}
-                onBlur={(e) => e.target.style.borderColor = "#e0e0e0"}
+                onBlur={(e) => e.target.style.borderColor = "#e8e8e8"}
               />
             </div>
 
-            {/* Submit */}
+            {/* Submit button */}
             <button
               type="submit"
               disabled={loading}
               style={{
                 width: "100%",
-                backgroundColor: loading ? "#e8e8e8" : "#071e07",
+                backgroundColor: loading ? "#f0f0f0" : "#071e07",
                 color: loading ? "#999" : "#ffffff",
                 border: "none",
                 borderRadius: "3px",
@@ -282,7 +282,7 @@ function Login() {
                 cursor: loading ? "not-allowed" : "pointer",
                 fontSize: "0.85rem",
                 fontWeight: "bold",
-                letterSpacing: "0.1em",
+                letterSpacing: "0.15em",
                 fontFamily: "'Georgia', serif",
                 transition: "all 0.2s ease",
               }}
@@ -311,7 +311,7 @@ function Login() {
       </div>
 
       <style>{`
-        input::placeholder { color: #bbb; }
+        input::placeholder { color: #ccc; }
         input:-webkit-autofill {
           -webkit-box-shadow: 0 0 0px 1000px #fafafa inset;
           -webkit-text-fill-color: #0a0a0a;
