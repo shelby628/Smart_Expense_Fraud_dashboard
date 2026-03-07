@@ -148,8 +148,11 @@ function EmployeeDashboard() {
         </div>
        
 
-        {/* Action Buttons */}
-        <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem" }}>
+    {/* Action Buttons */}
+        <p style={{ color: "#013220", fontWeight: "bold", marginTop: "1.5rem", marginBottom: "0.5rem" }}>
+          Need to make a transaction?
+        </p>
+        <div style={{ display: "flex", gap: "1rem" }}>
           <button
             onClick={() => navigate("/manual")}
             style={{
@@ -160,7 +163,7 @@ function EmployeeDashboard() {
             onMouseOver={(e) => (e.target.style.backgroundColor = "#228B22")}
             onMouseOut={(e) => (e.target.style.backgroundColor = "#013220")}
           >
-            ✏️ Manual Entry
+             Manual Entry
           </button>
 
           <button
@@ -173,7 +176,7 @@ function EmployeeDashboard() {
             onMouseOver={(e) => (e.target.style.backgroundColor = "#228B22")}
             onMouseOut={(e) => (e.target.style.backgroundColor = "#013220")}
           >
-            📤 Upload Transactions
+             Upload Transactions
           </button>
         </div>
 

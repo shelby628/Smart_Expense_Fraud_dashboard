@@ -11,9 +11,12 @@ function Manual() {
   const [merchant, setMerchant] = useState("");
   const [transactionDate, setTransactionDate] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false); // ✅ loading state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // ✅ disable button immediately
+    setMessage("");   // ✅ clear previous message
 
     try {
       const formattedDate = transactionDate ? transactionDate.split("T")[0] : "";
@@ -45,6 +48,8 @@ function Manual() {
     } catch (err) {
       setMessage("Error submitting transaction.");
       console.log(err.response?.data);
+    } finally {
+      setLoading(false); // ✅ re-enable button after response
     }
   };
 
@@ -201,26 +206,42 @@ function Manual() {
               />
             </label>
 
+            {/* ✅ Button disabled and shows "Submitting..." while loading */}
             <button
               type="submit"
+              disabled={loading}
               style={{
-                backgroundColor: "#013220",
+                backgroundColor: loading ? "#228B22" : "#013220",
                 color: "#ffffff",
                 padding: "0.75rem",
                 border: "none",
                 borderRadius: "5px",
-                cursor: "pointer",
+                cursor: loading ? "not-allowed" : "pointer",
                 fontWeight: "bold",
                 transition: "all 0.2s ease"
               }}
-              onMouseOver={(e) => (e.target.style.backgroundColor = "#228B22")}
-              onMouseOut={(e) => (e.target.style.backgroundColor = "#013220")}
+              onMouseOver={(e) => { if (!loading) e.target.style.backgroundColor = "#228B22"; }}
+              onMouseOut={(e) => { if (!loading) e.target.style.backgroundColor = "#013220"; }}
             >
-              Submit Transaction
+              {loading ? "Submitting..." : "Submit Transaction"}
             </button>
           </form>
 
-          {message && <p style={{ whiteSpace: "pre-line", marginTop: "1rem" }}>{message}</p>}
+          {/* ✅ Message shows instantly after response */}
+          {message && (
+            <p style={{
+              whiteSpace: "pre-line",
+              marginTop: "1rem",
+              backgroundColor: message.startsWith("Success") ? "rgba(0,255,128,0.1)" : "rgba(255,107,107,0.1)",
+              border: message.startsWith("Success") ? "1px solid #00ff80" : "1px solid #ff6b6b",
+              borderRadius: "5px",
+              padding: "0.75rem",
+              color: message.startsWith("Success") ? "#00ff80" : "#ff6b6b",
+              fontWeight: "bold",
+            }}>
+              {message}
+            </p>
+          )}
         </div>
       </div>
     </div>
