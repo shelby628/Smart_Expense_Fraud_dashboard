@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { UNSAFE_getHydrationData, useNavigate } from "react-router-dom";
 import API from "../api";
 
 function Login() {
@@ -7,12 +7,18 @@ function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [slowMessage, setSlowMessage] = useState(false);
   const navigate = useNavigate();
+  const slowTimer = useRef(null);
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     setLoading(true);
     setError("");
+    setSlowMessage(false);
+
+    slowTimer.current = setTimeout(() => setSlowMessage(true), 5000);
+
     try {
       const res = await API.post("token/", { username, password });
       localStorage.setItem("access", res.data.access);
@@ -29,42 +35,33 @@ function Login() {
         navigate("/dashboard");
       }
     } catch (err) {
-      setError("Invalid username or password.");
+      if (!err.response) {
+        setError("Server is waking up. Please try again in a moment.");
+      } else {
+        setError("Invalid username or password.");
+      }
       console.log(err.response?.data);
     } finally {
+      clearTimeout(slowTimer.current);
+      setSlowMessage(false);
       setLoading(false);
     }
   };
 
+  useEffect(() => {
+    return () => clearTimeout(slowTimer.current);
+  }, []);
+
   return (
     <div style={{
       minHeight: "100vh",
-      backgroundColor: "#070a0e",
+      backgroundColor: "#ffffff",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      fontFamily: "'Courier New', monospace",
+      fontFamily: "'Georgia', serif",
       position: "relative",
-      overflow: "hidden",
     }}>
-
-      {/* Background glow */}
-      <div style={{
-        position: "absolute", inset: 0,
-        background: "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0,255,128,0.05) 0%, transparent 70%)",
-        pointerEvents: "none",
-      }} />
-
-      {/* Grid lines background */}
-      <div style={{
-        position: "absolute", inset: 0,
-        backgroundImage: `
-          linear-gradient(rgba(0,255,128,0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(0,255,128,0.03) 1px, transparent 1px)
-        `,
-        backgroundSize: "50px 50px",
-        pointerEvents: "none",
-      }} />
 
       {/* Back to home */}
       <button
@@ -74,55 +71,50 @@ function Login() {
           top: "1.5rem",
           left: "1.5rem",
           backgroundColor: "transparent",
-          color: "#444",
+          color: "#aaa",
           border: "none",
           cursor: "pointer",
-          fontSize: "0.8rem",
-          letterSpacing: "0.15em",
-          fontFamily: "'Courier New', monospace",
+          fontSize: "0.82rem",
+          letterSpacing: "0.1em",
+          fontFamily: "'Georgia', serif",
           display: "flex",
           alignItems: "center",
           gap: "0.5rem",
           transition: "color 0.2s ease",
           zIndex: 10,
         }}
-        onMouseOver={(e) => e.currentTarget.style.color = "#00ff80"}
-        onMouseOut={(e) => e.currentTarget.style.color = "#444"}
+        onMouseOver={(e) => e.currentTarget.style.color = "#071e07"}
+        onMouseOut={(e) => e.currentTarget.style.color = "#aaa"}
       >
-        ← BACK
+        ← Back
       </button>
 
       {/* Login Card */}
       <div style={{
-        position: "relative",
-        zIndex: 1,
         width: "100%",
         maxWidth: 420,
         padding: "0 1.5rem",
       }}>
 
         {/* Logo */}
-        <div style={{
-          textAlign: "center",
-          marginBottom: "2.5rem",
-        }}>
+        <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
           <div style={{
             display: "inline-flex",
             alignItems: "center",
-            gap: "0.6rem",
-            marginBottom: "1rem",
+            gap: "0.5rem",
+            marginBottom: "1.2rem",
           }}>
             <div style={{
-              width: 8, height: 8,
-              backgroundColor: "#00ff80",
+              width: 9, height: 9,
+              backgroundColor: "#071e07",
               borderRadius: "50%",
-              boxShadow: "0 0 12px #00ff80",
             }} />
             <span style={{
               fontSize: "0.9rem",
-              letterSpacing: "0.25em",
-              color: "#00ff80",
+              letterSpacing: "0.2em",
+              color: "#071e07",
               fontWeight: "bold",
+              fontFamily: "'Georgia', serif",
             }}>
               SMARTEXPENSE
             </span>
@@ -130,50 +122,89 @@ function Login() {
           <h1 style={{
             fontSize: "1.8rem",
             fontWeight: "900",
-            fontFamily: "'Georgia', serif",
-            color: "#fff",
+            color: "#0a0a0a",
             marginBottom: "0.5rem",
           }}>
             Welcome back.
           </h1>
-          <p style={{ fontSize: "0.8rem", color: "#444", letterSpacing: "0.05em" }}>
+          <p style={{
+            fontSize: "0.85rem",
+            color: "#999",
+            letterSpacing: "0.03em",
+          }}>
             Sign in to access your dashboard
           </p>
         </div>
 
         {/* Form Card */}
         <div style={{
-          backgroundColor: "#0a0d11",
-          border: "1px solid #151515",
-          borderRadius: "6px",
+          backgroundColor: "#ffffff",
+          border: "1px solid #e8e8e8",
+          borderRadius: "4px",
           padding: "2.5rem",
-          boxShadow: "0 40px 80px rgba(0,0,0,0.6)",
+          boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
         }}>
+
+          {/* Wake-up message */}
+          {slowMessage && (
+            <div style={{
+              backgroundColor: "#f7faf7",
+              border: "1px solid #c8e6c8",
+              borderRadius: "3px",
+              padding: "0.75rem 1rem",
+              marginBottom: "1.5rem",
+              fontSize: "0.82rem",
+              color: "#071e07",
+              letterSpacing: "0.03em",
+            }}>
+              ⏳ Server is waking up, please wait...
+            </div>
+          )}
 
           {/* Error message */}
           {error && (
             <div style={{
-              backgroundColor: "rgba(255,107,107,0.1)",
-              border: "1px solid rgba(255,107,107,0.3)",
-              borderRadius: "4px",
+              backgroundColor: "#fff5f5",
+              border: "1px solid #fcc",
+              borderRadius: "3px",
               padding: "0.75rem 1rem",
               marginBottom: "1.5rem",
-              fontSize: "0.8rem",
-              color: "#ff6b6b",
-              letterSpacing: "0.05em",
+              fontSize: "0.82rem",
+              color: "#cc0000",
+              letterSpacing: "0.03em",
             }}>
               ⚠ {error}
+              {error.includes("waking up") && (
+                <button
+                  onClick={handleLogin}
+                  style={{
+                    display: "block",
+                    marginTop: "0.6rem",
+                    backgroundColor: "transparent",
+                    border: "1px solid #cc0000",
+                    borderRadius: "3px",
+                    color: "#cc0000",
+                    padding: "0.4rem 0.8rem",
+                    cursor: "pointer",
+                    fontSize: "0.75rem",
+                    fontFamily: "'Georgia', serif",
+                    letterSpacing: "0.05em",
+                  }}
+                >
+                  Retry →
+                </button>
+              )}
             </div>
           )}
 
           <form onSubmit={handleLogin}>
-            {/* Username field */}
+            {/* Username */}
             <div style={{ marginBottom: "1.5rem" }}>
               <label style={{
                 display: "block",
-                fontSize: "0.7rem",
-                letterSpacing: "0.2em",
-                color: "#555",
+                fontSize: "0.72rem",
+                letterSpacing: "0.15em",
+                color: "#777",
                 marginBottom: "0.6rem",
               }}>
                 USERNAME
@@ -186,29 +217,29 @@ function Login() {
                 placeholder="Enter your username"
                 style={{
                   width: "100%",
-                  backgroundColor: "#070a0e",
-                  border: "1px solid #1a1a1a",
+                  backgroundColor: "#fafafa",
+                  border: "1px solid #e0e0e0",
                   borderRadius: "3px",
                   padding: "0.85rem 1rem",
-                  color: "#fff",
+                  color: "#0a0a0a",
                   fontSize: "0.9rem",
-                  fontFamily: "'Courier New', monospace",
+                  fontFamily: "'Georgia', serif",
                   outline: "none",
                   transition: "border-color 0.2s ease",
                   boxSizing: "border-box",
                 }}
-                onFocus={(e) => e.target.style.borderColor = "#00ff80"}
-                onBlur={(e) => e.target.style.borderColor = "#1a1a1a"}
+                onFocus={(e) => e.target.style.borderColor = "#071e07"}
+                onBlur={(e) => e.target.style.borderColor = "#e0e0e0"}
               />
             </div>
 
-            {/* Password field */}
+            {/* Password */}
             <div style={{ marginBottom: "2rem" }}>
               <label style={{
                 display: "block",
-                fontSize: "0.7rem",
-                letterSpacing: "0.2em",
-                color: "#555",
+                fontSize: "0.72rem",
+                letterSpacing: "0.15em",
+                color: "#777",
                 marginBottom: "0.6rem",
               }}>
                 PASSWORD
@@ -221,49 +252,48 @@ function Login() {
                 placeholder="Enter your password"
                 style={{
                   width: "100%",
-                  backgroundColor: "#070a0e",
-                  border: "1px solid #1a1a1a",
+                  backgroundColor: "#fafafa",
+                  border: "1px solid #e0e0e0",
                   borderRadius: "3px",
                   padding: "0.85rem 1rem",
-                  color: "#fff",
+                  color: "#0a0a0a",
                   fontSize: "0.9rem",
-                  fontFamily: "'Courier New', monospace",
+                  fontFamily: "'Georgia', serif",
                   outline: "none",
                   transition: "border-color 0.2s ease",
                   boxSizing: "border-box",
                 }}
-                onFocus={(e) => e.target.style.borderColor = "#00ff80"}
-                onBlur={(e) => e.target.style.borderColor = "#1a1a1a"}
+                onFocus={(e) => e.target.style.borderColor = "#071e07"}
+                onBlur={(e) => e.target.style.borderColor = "#e0e0e0"}
               />
             </div>
 
-            {/* Submit button */}
+            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
               style={{
                 width: "100%",
-                backgroundColor: loading ? "#0a2e1a" : "#00ff80",
-                color: loading ? "#00ff80" : "#070a0e",
-                border: loading ? "1px solid #00ff80" : "none",
+                backgroundColor: loading ? "#e8e8e8" : "#071e07",
+                color: loading ? "#999" : "#ffffff",
+                border: "none",
                 borderRadius: "3px",
                 padding: "0.9rem",
                 cursor: loading ? "not-allowed" : "pointer",
                 fontSize: "0.85rem",
                 fontWeight: "bold",
-                letterSpacing: "0.2em",
-                fontFamily: "'Courier New', monospace",
+                letterSpacing: "0.1em",
+                fontFamily: "'Georgia', serif",
                 transition: "all 0.2s ease",
-                boxShadow: loading ? "none" : "0 0 20px rgba(0,255,128,0.2)",
               }}
               onMouseOver={(e) => {
-                if (!loading) e.currentTarget.style.boxShadow = "0 0 40px rgba(0,255,128,0.4)";
+                if (!loading) e.currentTarget.style.backgroundColor = "#0f3a0f";
               }}
               onMouseOut={(e) => {
-                if (!loading) e.currentTarget.style.boxShadow = "0 0 20px rgba(0,255,128,0.2)";
+                if (!loading) e.currentTarget.style.backgroundColor = "#071e07";
               }}
             >
-              {loading ? "AUTHENTICATING..." : "LOGIN →"}
+              {loading ? "Authenticating..." : "Login →"}
             </button>
           </form>
         </div>
@@ -272,8 +302,8 @@ function Login() {
         <p style={{
           textAlign: "center",
           marginTop: "2rem",
-          fontSize: "0.7rem",
-          color: "#2a2a2a",
+          fontSize: "0.72rem",
+          color: "#ccc",
           letterSpacing: "0.1em",
         }}>
           FRAUD DETECTION SYSTEM © 2025
@@ -281,10 +311,10 @@ function Login() {
       </div>
 
       <style>{`
-        input::placeholder { color: #2a2a2a; }
+        input::placeholder { color: #bbb; }
         input:-webkit-autofill {
-          -webkit-box-shadow: 0 0 0px 1000px #070a0e inset;
-          -webkit-text-fill-color: #ffffff;
+          -webkit-box-shadow: 0 0 0px 1000px #fafafa inset;
+          -webkit-text-fill-color: #0a0a0a;
         }
       `}</style>
     </div>
