@@ -118,7 +118,7 @@ function EmployeeDashboard() {
             EMPLOYEE DASHBOARD
           </p>
           <h1 style={{ fontSize: "2.4rem", fontWeight: "900", color: "#0a0a0a", lineHeight: 1.1, margin: 0 }}>
-            Welcome back, {username}.
+            Welcome  {username}.
           </h1>
           <p style={{ fontSize: "0.88rem", color: "#555", marginTop: "0.6rem", letterSpacing: "0.02em" }}>
             Your transaction activity and account overview
@@ -141,17 +141,17 @@ function EmployeeDashboard() {
               onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#f9faf9"}
               onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#fff"}
             >
-              <p style={{ fontSize: "0.65rem", letterSpacing: "0.28em", color: "#777", marginBottom: "1.2rem" }}>{s.label}</p>
+              <p style={{ fontSize: "1.5rem", letterSpacing: "0.28em", color: "#777", marginBottom: "1.2rem" }}>{s.label}</p>
               <p style={{ fontSize: "3rem", fontWeight: "900", color: "#071e07", lineHeight: 1, marginBottom: "0.5rem" }}>{s.value}</p>
-              <p style={{ fontSize: "0.78rem", color: "#666", letterSpacing: "0.05em" }}>{s.note}</p>
+              <p style={{ fontSize: "1rem", color: "#666", letterSpacing: "0.05em" }}>{s.note}</p>
             </div>
           ))}
         </div>
 
         {/* ── SUBMIT TRANSACTION ── */}
         <div style={{ marginBottom: "4rem" }}>
-          <p style={{ fontSize: "0.68rem", letterSpacing: "0.4em", color: "#071e07", marginBottom: "0.4rem" }}>SUBMIT</p>
-          <h2 style={{ fontSize: "1.3rem", fontWeight: "900", color: "#0a0a0a", marginBottom: "1.5rem" }}>
+          <p style={{ fontSize: "1rem", letterSpacing: "0.4em", color: "#071e07", marginBottom: "0.4rem" }}>SUBMIT</p>
+          <h2 style={{ fontSize: "1.8rem", fontWeight: "900", color: "#0a0a0a", marginBottom: "1.5rem" }}>
             New Transaction
           </h2>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
@@ -189,8 +189,8 @@ function EmployeeDashboard() {
         <div>
           <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "1.5rem" }}>
             <div>
-              <p style={{ fontSize: "0.68rem", letterSpacing: "0.4em", color: "#071e07", marginBottom: "0.4rem" }}>ACTIVITY</p>
-              <h2 style={{ fontSize: "1.3rem", fontWeight: "900", color: "#0a0a0a", margin: 0 }}>Recent Transactions</h2>
+              <p style={{ fontSize: "1rem", letterSpacing: "0.4em", color: "#071e07", marginBottom: "0.4rem" }}>ACTIVITY</p>
+              <h2 style={{ fontSize: "1.7rem", fontWeight: "900", color: "#0a0a0a", margin: 0 }}>Recent Transactions</h2>
             </div>
             <span style={{ fontSize: "0.78rem", color: "#666", letterSpacing: "0.05em" }}>Last 5 entries</span>
           </div>
@@ -202,8 +202,8 @@ function EmployeeDashboard() {
                   {["DATE", "AMOUNT", "TYPE", "STATUS", "DESCRIPTION", "RISK SCORE"].map((col) => (
                     <th key={col} style={{
                       padding: "0.9rem 1.5rem", textAlign: "left",
-                      fontSize: "0.62rem", letterSpacing: "0.25em",
-                      color: "#777", fontWeight: "normal",
+                      fontSize: "0.83rem", letterSpacing: "0.25em",
+                      color: "#061c1a", fontWeight: "normal",
                     }}>
                       {col}
                     </th>
@@ -298,7 +298,7 @@ function EmployeeDashboard() {
           <div style={{ width: 7, height: 7, backgroundColor: "#071e07", borderRadius: "50%" }} />
           <span style={{ fontSize: "0.78rem", color: "#071e07", letterSpacing: "0.15em" }}>SMARTEXPENSE</span>
         </div>
-        <span style={{ fontSize: "0.68rem", color: "#888", letterSpacing: "0.1em" }}>FRAUD DETECTION SYSTEM © 2025</span>
+        <span style={{ fontSize: "0.68rem", color: "#888", letterSpacing: "0.1em" }}>FRAUD DETECTION SYSTEM © 2026</span>
       </footer>
 
       <style>{`
