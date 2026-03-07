@@ -69,7 +69,7 @@ function AdminDashboard() {
             fontSize: "0.68rem", letterSpacing: "0.2em", color: "#888",
             paddingLeft: "0.75rem", borderLeft: "1px solid #e8e8e8",
           }}>
-            ADMIN CONSOLE
+            ADMIN VIEW
           </span>
         </div>
         <button
@@ -82,7 +82,7 @@ function AdminDashboard() {
           onMouseOver={(e) => e.currentTarget.style.color = "#071e07"}
           onMouseOut={(e) => e.currentTarget.style.color = "#555"}
         >
-          Sign out →
+          Log out →
         </button>
       </nav>
 
@@ -90,7 +90,7 @@ function AdminDashboard() {
       <main style={{ maxWidth: 1140, margin: "0 auto", padding: "4rem 4rem 6rem" }}>
 
         {/* Header */}
-        <div style={{ marginBottom: "3.5rem", paddingBottom: "2.5rem", borderBottom: "1px solid #e8e8e8" }}>
+        <div style={{ marginBottom: "3.5rem", paddingBottom: "2.5rem", borderBottom: "1px solid #e8e8e8", textAlign: "center" }}>
           <p style={{ fontSize: "0.68rem", letterSpacing: "0.4em", color: "#071e07", marginBottom: "0.6rem" }}>
             ADMINISTRATION
           </p>
@@ -130,9 +130,9 @@ function AdminDashboard() {
 
         {/* ── QUICK ACTIONS ── */}
         <div style={{ marginBottom: "4rem" }}>
-          <p style={{ fontSize: "1rem", letterSpacing: "0.4em", color: "#071e07", marginBottom: "0.4rem" }}>QUICK ACTIONS</p>
+          <p style={{ fontSize: "1rem", letterSpacing: "0.4em", color: "#071e07", marginBottom: "0.4rem" }}>MANAGE</p>
           <h2 style={{ fontSize: "1.8rem", fontWeight: "900", color: "#0a0a0a", marginBottom: "1.5rem" }}>
-            Navigate
+            Actions
           </h2>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             <button
