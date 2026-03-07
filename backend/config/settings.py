@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
+from datetime import timedelta
 
 load_dotenv()
 
@@ -23,6 +24,7 @@ INSTALLED_APPS = [
     'core',
     'transactions',
     'corsheaders',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -99,17 +101,17 @@ REST_FRAMEWORK = {
     )
 }
 
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),   # access token lasts 1 hour
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),       # refresh token lasts 7 days
+    'ROTATE_REFRESH_TOKENS': True,                     # issue new refresh token on every refresh
+    'BLACKLIST_AFTER_ROTATION': True,                  # blacklist old refresh tokens
+}
 # ✅ CORS
 CORS_ALLOW_ALL_ORIGINS = os.getenv("CORS_ALLOW_ALL_ORIGINS", "False") == "True"
 CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000").split(",")
 
 # ✅ Allow credentials for JWT
 CORS_ALLOW_CREDENTIALS = True
-```
 
-The **only change** was moving `CorsMiddleware` to the top of `MIDDLEWARE`. Now:
-
-1. Push this to GitHub — Render will auto-redeploy
-2. Go to Render → **Environment** and set:
-```
-CORS_ALLOWED_ORIGINS=https://smart-expense-fraud-dashboard.vercel.app,http://localhost:3000
