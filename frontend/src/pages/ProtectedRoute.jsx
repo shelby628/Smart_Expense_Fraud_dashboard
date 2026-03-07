@@ -40,14 +40,14 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
     return (
       <div style={{
         minHeight: "100vh",
-        backgroundColor: "#070a0e",
+        backgroundColor: "#ffffff",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontFamily: "'Courier New', monospace",
-        color: "#00ff80",
-        fontSize: "0.85rem",
-        letterSpacing: "0.2em",
+        fontFamily: "'Georgia', serif",
+        color: "#aaa",
+        fontSize: "0.78rem",
+        letterSpacing: "0.3em",
       }}>
         AUTHENTICATING...
       </div>
