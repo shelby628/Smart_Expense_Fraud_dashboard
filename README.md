@@ -111,6 +111,21 @@ npm run dev
 | Username | admin|
 | Password | admin123|
 
+---
+## Challenges & Solutions
+
+- **Finding the Right Dataset** — Publicly available fraud datasets didn't reflect
+  the structure of the transaction data this system works with. To solve this, I 
+  wrote custom Python scripts to synthesize a realistic dataset, giving me full 
+  control over the distribution of flagged vs normal transactions and the feature 
+  columns the ML model needed to train on.
+
+- **Deployment** — Deploying a React + Django project across separate platforms 
+  (Vercel for frontend, backend hosted separately) came with CORS issues, 
+  environment variable configuration, and making sure the ML model loaded 
+  correctly in a production environment. Worked through each issue systematically 
+  until the full stack was communicating correctly.
+
 ## Author
 
-Built by me as a solo developer as a full-stack fraud detection project combining React, Django, and machine learning.
+Built by shelby as a solo developer as a full-stack fraud detection project combining React, Django, and machine learning.
