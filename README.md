@@ -87,6 +87,7 @@ npm run dev
 
 ---
 
+
 ## Roles
 
 | Role | Access |
@@ -95,6 +96,20 @@ npm run dev
 | Admin | View all transactions, manage employees, view audit logs |
 
 ---
+
+## Demo Credentials
+
+### Employee Account
+| Field | Value |
+|-------|-------|
+| Username | bob |
+| Password | employee123 |
+
+### Admin Account
+| Field | Value |
+|-------|-------|
+| Username | admin|
+| Password | admin123|
 
 ## Author
 
