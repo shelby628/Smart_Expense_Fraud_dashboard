@@ -1,6 +1,8 @@
 # SmartExpense — Fraud Detection System
 
 SmartExpense is a full-stack web application that allows employees to submit transactions and automatically flags suspicious activity using machine learning and rule-based risk scoring.
+🔗 **Live Demo:** [smart-expense-fraud-dashboard.vercel.app](https://smart-expense-fraud-dashboard.vercel.app/)
+
 
 ---
 
