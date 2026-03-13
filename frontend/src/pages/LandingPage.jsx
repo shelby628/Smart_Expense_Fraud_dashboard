@@ -75,7 +75,7 @@ const LandingPage = () => {
             letterSpacing: "0.15em",
             color: "#071e07",
             fontWeight: "bold",
-            fontFamily: "'Georgia', serif",
+            fontFamily: "'Gill Sans', sans-serif",
           }}>
             SMARTEXPENSE
           </span>
@@ -91,7 +91,7 @@ const LandingPage = () => {
             cursor: "pointer",
             fontSize: "0.82rem",
             letterSpacing: "0.1em",
-            fontFamily: "'Georgia', serif",
+            fontFamily: "'Gill Sans', sans-serif",
             transition: "all 0.2s ease",
           }}
           onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#0f3a0f"}
@@ -121,7 +121,7 @@ const LandingPage = () => {
           border: "1px solid #071e07",
           padding: "0.35rem 1rem",
           marginBottom: "2.5rem",
-          fontFamily: "'Georgia', serif",
+          fontFamily: "'Gill Sans', sans-serif",
         }}>
           FRAUD DETECTION SYSTEM
         </div>
@@ -133,14 +133,13 @@ const LandingPage = () => {
           marginBottom: "2rem",
           color: "#0a0a0a",
           maxWidth: 750,
+          fontFamily: "'Gill Sans', sans-serif",
         }}>
-          Every transaction
+          Every Transaction Tells a Story.
           <br />
-          <span style={{ color: "#071e07" }}>tells a story.</span>
+          We Read Between the Lines.
           <br />
-          We read between
-          <br />
-          <span style={{ color: "#aaaaaa" }}>the lines.</span>
+          
         </h1>
 
         <p style={{
@@ -149,7 +148,7 @@ const LandingPage = () => {
           maxWidth: 480,
           marginBottom: "3rem",
           lineHeight: 1.9,
-          fontFamily: "'Georgia', serif",
+          fontFamily: "'Gill Sans', sans-serif",
         }}>
           Combining rule-based logic and machine learning to detect fraud before it costs you.
         </p>
@@ -221,7 +220,7 @@ const LandingPage = () => {
               fontSize: "0.72rem",
               letterSpacing: "0.2em",
               color: "#999",
-              fontFamily: "'Georgia', serif",
+              fontFamily: "'Gill Sans', sans-serif",
             }}>
               {s.label}
             </div>
@@ -235,18 +234,19 @@ const LandingPage = () => {
           <div style={{
             fontSize: "0.72rem", letterSpacing: "0.35em",
             color: "#071e07", marginBottom: "1rem",
-            fontFamily: "'Georgia', serif",
+            fontFamily: "'Gill Sans', sans-serif",
           }}>
             CAPABILITIES
           </div>
           <h2 style={{
             fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
-            fontWeight: "900",
+            fontWeight: "700",
             color: "#0a0a0a",
             maxWidth: 480,
             lineHeight: 1.2,
+            fontFamily: "'Gill Sans', sans-serif",
           }}>
-            Built different.{" "}
+            Built Different.{" "}
             <span style={{ color: "#aaaaaa" }}>Designed to catch what others miss.</span>
           </h2>
         </div>
@@ -304,15 +304,15 @@ const LandingPage = () => {
       <section id="how" style={{
         padding: "7rem 4rem",
         backgroundColor: "#f9f9f9",
-        borderTop: "1px solid #e8e8e8",
-        borderBottom: "1px solid #e8e8e8",
+        borderTop: "4px solid #e8e8e8",
+        borderBottom: "4px solid #e8e8e8",
       }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ marginBottom: "4rem" }}>
             <div style={{
               fontSize: "0.72rem", letterSpacing: "0.35em",
               color: "#071e07", marginBottom: "1rem",
-              fontFamily: "'Georgia', serif",
+              fontFamily: "'Gill Sans', sans-serif",
             }}>
               HOW IT WORKS
             </div>
@@ -321,9 +321,10 @@ const LandingPage = () => {
               fontWeight: "900",
               color: "#0a0a0a",
               lineHeight: 1.2,
+              fontFamily: "'Gill Sans', sans-serif",
             }}>
               Three steps.{" "}
-              <span style={{ color: "#aaaaaa" }}>Zero tolerance.</span>
+              <span style={{ color: "#aaaaaa" }}>Zero Tolerance.</span>
             </h2>
           </div>
 
@@ -361,7 +362,7 @@ const LandingPage = () => {
                   fontSize: "0.85rem",
                   color: "#777",
                   lineHeight: 1.9,
-                  fontFamily: "'Georgia', serif",
+                  fontFamily: "'Gill Sans', sans-serif",
                 }}>
                   {s.desc}
                 </p>
@@ -394,7 +395,7 @@ const LandingPage = () => {
           marginBottom: "3rem",
           fontSize: "0.95rem",
           lineHeight: 1.8,
-          fontFamily: "'Georgia', serif",
+          fontFamily: "'Gill Sans', sans-serif",
         }}>
           Login to your dashboard and start protecting your business today.
         </p>
@@ -435,19 +436,19 @@ const LandingPage = () => {
             fontSize: "0.82rem",
             color: "#071e07",
             letterSpacing: "0.15em",
-            fontFamily: "'Georgia', serif",
+            fontFamily: "'Gill Sans', sans-serif",
           }}>
             SMARTEXPENSE
           </span>
         </div>
         <span style={{
-          fontSize: "0.75rem",
-          color: "#aaa",
-          letterSpacing: "0.1em",
-          fontFamily: "'Georgia', serif",
-        }}>
-          FRAUD DETECTION SYSTEM © 2026
-        </span>
+  fontSize: "0.75rem",
+  color: "#aaa",
+  letterSpacing: "0.1em",
+  fontFamily: "'Gill Sans', sans-serif",  // ← just the value, no "font-family:"
+}}>
+  FRAUD DETECTION SYSTEM © 2026
+</span>
       </footer>
 
       <style>{`
