@@ -47,6 +47,12 @@ const LandingPage = () => {
     { value: "100%", label: "Audit Coverage" },
   ];
 
+  const navLinks = [
+    { label: "Features", id: "features" },
+    { label: "How It Works", id: "how" },
+    { label: "Contact", id: "contact" },
+  ];
+
   return (
     <div style={{
       backgroundColor: "#ffffff",
@@ -64,6 +70,7 @@ const LandingPage = () => {
         borderBottom: scrolled ? "1px solid #e8e8e8" : "1px solid transparent",
         transition: "all 0.3s ease",
       }}>
+        {/* Logo */}
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <div style={{
             width: 10, height: 10,
@@ -75,30 +82,53 @@ const LandingPage = () => {
             letterSpacing: "0.15em",
             color: "#071e07",
             fontWeight: "bold",
-            fontFamily: "'Gill Sans', sans-serif",
+            fontFamily: "'Roboto', Arial, sans-serif",
           }}>
             SMARTEXPENSE
           </span>
         </div>
-        <button
-          onClick={() => navigate("/login")}
-          style={{
-            backgroundColor: "#071e07",
-            color: "#ffffff",
-            border: "none",
-            borderRadius: "3px",
-            padding: "0.6rem 1.8rem",
-            cursor: "pointer",
-            fontSize: "0.82rem",
-            letterSpacing: "0.1em",
-            fontFamily: "'Gill Sans', sans-serif",
-            transition: "all 0.2s ease",
-          }}
-          onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#0f3a0f"}
-          onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#071e07"}
-        >
-          Login →
-        </button>
+
+        {/* Nav links + Login */}
+        <div style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
+          {navLinks.map((link) => (
+            <span
+              key={link.id}
+              onClick={() => document.getElementById(link.id)?.scrollIntoView({ behavior: "smooth" })}
+              style={{
+                fontSize: "0.78rem",
+                letterSpacing: "0.12em",
+                color: "#555",
+                cursor: "pointer",
+                fontFamily: "'Gill Sans', sans-serif",
+                transition: "color 0.2s ease",
+              }}
+              onMouseOver={(e) => e.currentTarget.style.color = "#071e07"}
+              onMouseOut={(e) => e.currentTarget.style.color = "#555"}
+            >
+              {link.label}
+            </span>
+          ))}
+
+          <button
+            onClick={() => navigate("/login")}
+            style={{
+              backgroundColor: "#071e07",
+              color: "#ffffff",
+              border: "none",
+              borderRadius: "3px",
+              padding: "0.6rem 1.8rem",
+              cursor: "pointer",
+              fontSize: "0.82rem",
+              letterSpacing: "0.1em",
+              fontFamily: "'Gill Sans', sans-serif",
+              transition: "all 0.2s ease",
+            }}
+            onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#0f3a0f"}
+            onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#071e07"}
+          >
+            Login →
+          </button>
+        </div>
       </nav>
 
       {/* ── HERO ── */}
@@ -133,13 +163,11 @@ const LandingPage = () => {
           marginBottom: "2rem",
           color: "#0a0a0a",
           maxWidth: 750,
-          fontFamily: "'Gill Sans', sans-serif",
+          fontFamily: "'Roboto', Arial, sans-serif",
         }}>
           Every Transaction Tells a Story.
           <br />
           We Read Between the Lines.
-          <br />
-          
         </h1>
 
         <p style={{
@@ -196,7 +224,7 @@ const LandingPage = () => {
       </section>
 
       {/* ── STATS ── */}
-      <section style={{
+      <section id="stats" style={{
         borderTop: "1px solid #e8e8e8",
         borderBottom: "1px solid #e8e8e8",
         padding: "4rem",
@@ -229,7 +257,7 @@ const LandingPage = () => {
       </section>
 
       {/* ── FEATURES ── */}
-      <section style={{ padding: "7rem 4rem", maxWidth: 1100, margin: "0 auto" }}>
+      <section id="features" style={{ padding: "7rem 4rem", maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ marginBottom: "4rem" }}>
           <div style={{
             fontSize: "0.72rem", letterSpacing: "0.35em",
@@ -244,7 +272,7 @@ const LandingPage = () => {
             color: "#0a0a0a",
             maxWidth: 480,
             lineHeight: 1.2,
-            fontFamily: "'Gill Sans', sans-serif",
+            fontFamily: "'Roboto', Arial, sans-serif",
           }}>
             Built Different.{" "}
             <span style={{ color: "#aaaaaa" }}>Designed to catch what others miss.</span>
@@ -312,7 +340,7 @@ const LandingPage = () => {
             <div style={{
               fontSize: "0.72rem", letterSpacing: "0.35em",
               color: "#071e07", marginBottom: "1rem",
-              fontFamily: "'Gill Sans', sans-serif",
+              fontFamily: "'Roboto', Arial, sans-serif",
             }}>
               HOW IT WORKS
             </div>
@@ -321,7 +349,7 @@ const LandingPage = () => {
               fontWeight: "900",
               color: "#0a0a0a",
               lineHeight: 1.2,
-              fontFamily: "'Gill Sans', sans-serif",
+              fontFamily: "'Roboto', Arial, sans-serif",
             }}>
               Three steps.{" "}
               <span style={{ color: "#aaaaaa" }}>Zero Tolerance.</span>
@@ -362,7 +390,7 @@ const LandingPage = () => {
                   fontSize: "0.85rem",
                   color: "#777",
                   lineHeight: 1.9,
-                  fontFamily: "'Gill Sans', sans-serif",
+                  fontFamily: "'Roboto', sans-serif",
                 }}>
                   {s.desc}
                 </p>
@@ -420,6 +448,117 @@ const LandingPage = () => {
         </button>
       </section>
 
+      {/* ── CONTACT ── */}
+      <section id="contact" style={{
+        padding: "7rem 4rem",
+        backgroundColor: "#f9f9f9",
+        borderTop: "1px solid #e8e8e8",
+      }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6rem", alignItems: "start" }}>
+          <div>
+            <div style={{
+              fontSize: "0.72rem", letterSpacing: "0.35em",
+              color: "#071e07", marginBottom: "1rem",
+              fontFamily: "'Gill Sans', sans-serif",
+            }}>
+              CONTACT & SUPPORT
+            </div>
+            <h2 style={{
+              fontSize: "clamp(1.6rem, 3vw, 2.4rem)",
+              fontWeight: "900",
+              color: "#0a0a0a",
+              lineHeight: 1.2,
+              marginBottom: "1.5rem",
+              fontFamily: "'Roboto', Arial, sans-serif",
+            }}>
+              Lets Get In Touch{" "}
+              
+            </h2>
+            <p style={{
+              fontSize: "0.88rem",
+              color: "#0a2b0c",
+              lineHeight: 1.9,
+              fontFamily: "'Gill Sans', sans-serif",
+              maxWidth: 360,
+            }}>
+              Reach out for support, feature requests, or to report an issue. Our team typically responds within one business day.
+            </p>
+            <div style={{ marginTop: "2rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              {[
+                { label: "Email", value: "shelbyadede@gmail.com"},
+                { label: "Phone", value: "+254707887162" },
+              ].map((item) => (
+                <div key={item.label} style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+                  <span style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "#000000", fontFamily: "'Gill Sans', sans-serif", width: 40 }}>{item.label}</span>
+                  <span style={{ fontSize: "0.85rem", color: "#071e07", fontFamily: "'Gill Sans', sans-serif" }}>{item.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Simple contact form */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+            {["Your Name", "Your Email"].map((placeholder) => (
+              <input
+                key={placeholder}
+                type="text"
+                placeholder={placeholder}
+                style={{
+                  border: "1px solid #ddd",
+                  borderRadius: "3px",
+                  padding: "0.85rem 1.2rem",
+                  fontSize: "0.85rem",
+                  fontFamily: "'Gill Sans', sans-serif",
+                  color: "#333",
+                  outline: "none",
+                  transition: "border-color 0.2s",
+                  backgroundColor: "#fff",
+                }}
+                onFocus={(e) => e.currentTarget.style.borderColor = "#071e07"}
+                onBlur={(e) => e.currentTarget.style.borderColor = "#ddd"}
+              />
+            ))}
+            <textarea
+              placeholder="Your message..."
+              rows={5}
+              style={{
+                border: "1px solid #ddd",
+                borderRadius: "3px",
+                padding: "0.85rem 1.2rem",
+                fontSize: "0.85rem",
+                fontFamily: "'Gill Sans', sans-serif",
+                color: "#333",
+                outline: "none",
+                resize: "vertical",
+                transition: "border-color 0.2s",
+                backgroundColor: "#fff",
+              }}
+              onFocus={(e) => e.currentTarget.style.borderColor = "#071e07"}
+              onBlur={(e) => e.currentTarget.style.borderColor = "#ddd"}
+            />
+            <button
+              style={{
+                backgroundColor: "#071e07",
+                color: "#ffffff",
+                border: "none",
+                borderRadius: "3px",
+                padding: "0.85rem 2rem",
+                cursor: "pointer",
+                fontSize: "0.82rem",
+                letterSpacing: "0.1em",
+                fontFamily: "'Gill Sans', sans-serif",
+                alignSelf: "flex-start",
+                transition: "background-color 0.2s ease",
+              }}
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#0f3a0f"}
+              onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#071e07"}
+            >
+              Send Message →
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* ── FOOTER ── */}
       <footer style={{
         borderTop: "1px solid #e8e8e8",
@@ -442,13 +581,13 @@ const LandingPage = () => {
           </span>
         </div>
         <span style={{
-  fontSize: "0.75rem",
-  color: "#aaa",
-  letterSpacing: "0.1em",
-  fontFamily: "'Gill Sans', sans-serif",  // ← just the value, no "font-family:"
-}}>
-  FRAUD DETECTION SYSTEM © 2026
-</span>
+          fontSize: "0.75rem",
+          color: "#aaa",
+          letterSpacing: "0.1em",
+          fontFamily: "'Gill Sans', sans-serif",
+        }}>
+          FRAUD DETECTION SYSTEM © 2026
+        </span>
       </footer>
 
       <style>{`
@@ -460,6 +599,8 @@ const LandingPage = () => {
 
         @media (max-width: 768px) {
           nav { padding: 1rem 1.5rem !important; }
+          nav > div:last-child { gap: 1.2rem !important; }
+          nav span { display: none; }
           section { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
           footer { padding: 1.5rem !important; }
         }
