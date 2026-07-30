@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://smart-expense-fraud-dashboard.onrender.com/api/",
-  withCredentials: true,
+   baseURL: import.meta.env.VITE_API_URL || "https://smart-expense-fraud-dashboard.onrender.com/api/",
+   withCredentials: true,
 });
 
 // Automatically refresh token if access token expires
@@ -10,6 +10,13 @@ API.interceptors.response.use(
   (response) => response, // if request is successful, just return it
   async (error) => {
     const originalRequest = error.config;
+
+
+    // Don't try to refresh if the refresh call itself failed
+    if (originalRequest.url.includes("token/refresh")) {
+      return Promise.reject(error);
+    }
+
 
     // If we get a 401 and haven't already retried
     if (error.response?.status === 401 && !originalRequest._retry) {

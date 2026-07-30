@@ -13,6 +13,7 @@ function Login() {
 
   const handleLogin = async (e) => {
     if (e) e.preventDefault();
+    console.log("LOGIN CLICKED");
     setLoading(true);
     setError("");
     setSlowMessage(false);
@@ -43,6 +44,38 @@ function Login() {
       setLoading(false);
     }
   };
+  const handleDemoLogin = async (role) => {
+  const demoUsername = role === "admin" ? "demo_admin" : "demo_employee";
+  const demoPassword = role === "admin" ? "Demo@Admin123" : "Demo@Employee123";
+
+  setUsername(demoUsername);
+  setPassword(demoPassword);
+  setError("");
+  setLoading(true);
+  setSlowMessage(false);
+
+  slowTimer.current = setTimeout(() => setSlowMessage(true), 5000);
+
+  try {
+    await API.post("token/", { username: demoUsername, password: demoPassword });
+
+    const meRes = await API.get("transactions/users/me/");
+    const userData = meRes.data;
+
+    if (userData.is_admin) {
+      navigate("/admin");
+    } else {
+      navigate("/dashboard");
+    }
+  } catch (err) {
+    setError("Demo login failed. Please try again.");
+    console.log(err.response?.data);
+  } finally {
+    clearTimeout(slowTimer.current);
+    setSlowMessage(false);
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     return () => clearTimeout(slowTimer.current);
@@ -292,6 +325,50 @@ function Login() {
               {loading ? "Authenticating..." : "Login →"}
             </button>
           </form>
+        
+
+{/* Demo buttons */}
+<div style={{ marginTop: "1.5rem", display: "flex", gap: "0.75rem" }}>
+  <button
+    type="button"
+    onClick={() => handleDemoLogin("admin")}
+    disabled={loading}
+    style={{
+      flex: 1,
+      backgroundColor: "transparent",
+      border: "1px solid #071e07",
+      borderRadius: "3px",
+      padding: "0.75rem",
+      cursor: loading ? "not-allowed" : "pointer",
+      fontSize: "0.75rem",
+      color: "#071e07",
+      fontFamily: "'Georgia', serif",
+      letterSpacing: "0.08em",
+    }}
+  >
+    Try Demo (Admin) →
+  </button>
+
+  <button
+    type="button"
+    onClick={() => handleDemoLogin("employee")}
+    disabled={loading}
+    style={{
+      flex: 1,
+      backgroundColor: "transparent",
+      border: "1px solid #071e07",
+      borderRadius: "3px",
+      padding: "0.75rem",
+      cursor: loading ? "not-allowed" : "pointer",
+      fontSize: "0.75rem",
+      color: "#071e07",
+      fontFamily: "'Georgia', serif",
+      letterSpacing: "0.08em",
+    }}
+  >
+    Try Demo (Employee) →
+  </button>
+</div>
         </div>
 
         {/* Footer note */}
